@@ -28,3 +28,12 @@ DATA = {
 #     'ингредиент2': количество2,
 #   }
 # }
+
+
+def show_ingredients(request, name):
+    count_person = int(request.GET.get('servings', 1))
+    context = {'recipe': DATA[name].copy()}
+    if count_person != 1:
+        for name, count in DATA[name].items():
+            context['recipe'][name] = round(count*count_person, 1)
+    return render(request, 'calculator/index.html', context)
